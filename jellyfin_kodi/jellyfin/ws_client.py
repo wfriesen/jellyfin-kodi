@@ -112,6 +112,10 @@ class WSClient(threading.Thread):
 
             return
 
+        if message['MessageType'] in ('ForceKeepAlive',):
+            LOG.debug("Received ForceKeepAlive, sending KeepAlive")
+            self.send('KeepAlive')
+        
         if not self.client.config.data['app.default']:
             data['ServerId'] = self.client.auth.server_id
 
